@@ -1,1 +1,7 @@
+.git
+.gitignore
 .env
+node_modules
+storage/*
+bootstrap/cache/*
+vendor/*
