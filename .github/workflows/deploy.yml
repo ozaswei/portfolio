@@ -5,27 +5,27 @@
     username: ${{ secrets.EC2_USERNAME }}
     key: ${{ secrets.EC2_KEY }}
     script: |
-      cd /home/ubuntu/portfolio
-
-      # Set write permissions and decode real .env
-      chmod -R u+w .
-      echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
-
-      # Verify .env is really written
-      echo "====== .env Preview ======"
-      cat .env
-
-      # Bring down and rebuild containers
-      docker-compose down
-      docker-compose up -d --build
-
-      # Copy .env into container
-      docker cp .env portfolio_app_1:/var/www/html/.env
-
-      # Laravel post-deploy setup
-      docker exec portfolio_app_1 php artisan config:clear
-      docker exec portfolio_app_1 php artisan key:generate
-      docker exec portfolio_app_1 php artisan cache:clear
-      docker exec portfolio_app_1 php artisan view:clear
-      docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
-      docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
+  	cd /home/ubuntu/portfolio
+	
+  	# Ensure write permission
+  	chmod -R u+w .
+	
+  	# Write and decode real .env from GitHub Secret
+  	echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
+	
+	# Debug: show part of .env to confirm
+  	head -n 5 .env
+	
+  	docker-compose down
+  	docker-compose up -d --build
+	
+  	# Copy .env inside the container
+  	docker cp .env portfolio_app_1:/var/www/html/.env
+	
+  	# Laravel setup
+  	docker exec portfolio_app_1 php artisan config:clear
+  	docker exec portfolio_app_1 php artisan key:generate
+  	docker exec portfolio_app_1 php artisan cache:clear
+  	docker exec portfolio_app_1 php artisan view:clear
+  	docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
+  	docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
