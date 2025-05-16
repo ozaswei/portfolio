@@ -6,13 +6,20 @@
     key: ${{ secrets.EC2_KEY }}
     script: |
       cd /home/ubuntu/portfolio
+
+      # Ensure write access
+      chmod -R u+w .
+
+      # Write and decode .env from base64 secret
+      echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
+
       docker-compose down
       docker-compose up -d --build
-      # Wait a few seconds to ensure container is up
-      sleep 10
 
-      # Post-deploy Laravel setup inside container
-      docker exec portfolio_app_1 cp .env.example .env
+      # Copy .env into the container
+      docker cp .env portfolio_app_1:/var/www/html/.env
+
+      # Laravel setup
       docker exec portfolio_app_1 php artisan key:generate
       docker exec portfolio_app_1 php artisan config:clear
       docker exec portfolio_app_1 php artisan cache:clear
