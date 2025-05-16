@@ -1,33 +1,55 @@
-- name: Run deployment over SSH
-  uses: appleboy/ssh-action@v1.0.0
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ${{ secrets.EC2_USERNAME }}
-    key: ${{ secrets.EC2_KEY }}
-    script: |
-  	cd /home/ubuntu/portfolio
-	
-  	# Ensure write permission
-  	chmod -R u+w .
-	
-  	# Write and decode real .env from GitHub Secret
-  	echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
-	
-	# Debug: show part of .env to confirm
-  	head -n 5 .env
-	
-  	docker-compose down
-  	docker-compose up -d --build
-	
-  	# Copy .env inside the container
-  	docker cp .env portfolio_app_1:/var/www/html/.env
-	
-  	# Laravel setup
-  	docker exec portfolio_app_1 php artisan config:clear
-  	docker exec portfolio_app_1 php artisan key:generate
-  	docker exec portfolio_app_1 php artisan cache:clear
-  	docker exec portfolio_app_1 php artisan view:clear
-	docker exec portfolio_app_1 git config --global --add safe.directory /var/www/html
-	docker exec portfolio_app_1 chown -R www-data:www-data /var/www/html
-  	docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
-  	docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
+name: Deploy Laravel Docker to AWS EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Copy files to EC2 via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "./"
+          target: "/home/ubuntu/portfolio/"
+          rm: true
+
+      - name: Run deployment over SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /home/ubuntu/portfolio
+
+            chmod -R u+w .
+
+            # Decode .env from GitHub Secret
+            echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
+
+            echo "===== .env preview ====="
+            head -n 10 .env
+
+            docker-compose down
+            docker-compose up -d --build
+
+            docker cp .env portfolio_app_1:/var/www/html/.env
+
+            docker exec portfolio_app_1 git config --global --add safe.directory /var/www/html
+            docker exec portfolio_app_1 php artisan config:clear
+            docker exec portfolio_app_1 php artisan key:generate
+            docker exec portfolio_app_1 php artisan cache:clear
+            docker exec portfolio_app_1 php artisan view:clear
+            docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
+            docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache

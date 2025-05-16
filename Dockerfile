@@ -19,7 +19,7 @@ COPY . .
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# ✅ Run Composer install AFTER files are copied
+# Run Composer install AFTER files are copied
 RUN composer install --no-dev --optimize-autoloader
 
 # Fix permissions
