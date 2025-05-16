@@ -33,11 +33,14 @@ jobs:
           docker-compose down
           docker-compose up -d --build
 
-          # Post-deploy Laravel setup inside container
-          docker exec portfolio_app_1 bash -c "
-            cp .env.example .env || true
-            php artisan key:generate || true
-            php artisan config:clear || true
-            php artisan cache:clear || true
-            chown -R www-data:www-data storage bootstrap/cache
+           # Post-deploy Laravel setup inside container
+      docker exec portfolio_app_1 bash -c "
+        cp .env.example .env || true
+        php artisan key:generate || true
+        php artisan config:clear || true
+        php artisan cache:clear || true
+        php artisan view:clear || true
+
+        chown -R www-data:www-data storage bootstrap/cache
+        chmod -R ug+rwX storage bootstrap/cache
           "
