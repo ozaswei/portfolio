@@ -24,9 +24,9 @@ jobs:
           target: "/home/ubuntu/portfolio/"
           rm: false
           overwrite: true
-          tar_ignore: |
-            storage/*
-            bootstrap/cache/*
+          strip_components: 0
+          tar_dereference: false
+          tar_exec: tar
 
       - name: Run deployment over SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -39,6 +39,7 @@ jobs:
 
             # Ensure write access
             chmod -R u+w .
+            sudo chmod -R u+w /home/ubuntu/portfolio
 
             # Inject real .env from GitHub Secret (base64)
             echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
