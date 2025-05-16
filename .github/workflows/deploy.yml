@@ -23,7 +23,7 @@ jobs:
           source: "./"
           target: "/home/ubuntu/portfolio/"
           rm: false
-	  overwrite: true
+          overwrite: true
 
       - name: Run deployment over SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -33,22 +33,34 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/portfolio
+
+            # Ensure write access
             chmod -R u+w .
 
+            # Inject real .env from GitHub Secret (base64)
             echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
+
             echo "===== .env preview ====="
             head -n 10 .env
 
+            # Stop and rebuild containers
             docker-compose down
             docker-compose up -d --build
 
+            # Copy .env inside the container
             docker cp .env portfolio_app_1:/var/www/html/.env
 
+            # Trust repo inside container & run Laravel setup
             docker exec portfolio_app_1 git config --global --add safe.directory /var/www/html
             docker exec portfolio_app_1 composer install --no-dev --optimize-autoloader
             docker exec portfolio_app_1 php artisan config:clear
             docker exec portfolio_app_1 php artisan key:generate
             docker exec portfolio_app_1 php artisan cache:clear
             docker exec portfolio_app_1 php artisan view:clear
+
+            # Fix permissions
             docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
             docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
+
+            # (Optional) Run database migrations
+            docker exec portfolio_app_1 php artisan migrate --force
