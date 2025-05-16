@@ -7,21 +7,24 @@
     script: |
       cd /home/ubuntu/portfolio
 
-      # Ensure write access
+      # Set write permissions and decode real .env
       chmod -R u+w .
-
-      # Write and decode .env from base64 secret
       echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
 
+      # Verify .env is really written
+      echo "====== .env Preview ======"
+      cat .env
+
+      # Bring down and rebuild containers
       docker-compose down
       docker-compose up -d --build
 
-      # Copy .env into the container
+      # Copy .env into container
       docker cp .env portfolio_app_1:/var/www/html/.env
 
-      # Laravel setup
-      docker exec portfolio_app_1 php artisan key:generate
+      # Laravel post-deploy setup
       docker exec portfolio_app_1 php artisan config:clear
+      docker exec portfolio_app_1 php artisan key:generate
       docker exec portfolio_app_1 php artisan cache:clear
       docker exec portfolio_app_1 php artisan view:clear
       docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
