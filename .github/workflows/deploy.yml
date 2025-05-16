@@ -24,6 +24,9 @@ jobs:
           target: "/home/ubuntu/portfolio/"
           rm: false
           overwrite: true
+          tar_ignore: |
+            storage/*
+            bootstrap/cache/*
 
       - name: Run deployment over SSH
         uses: appleboy/ssh-action@v1.0.0
