@@ -8,15 +8,14 @@
       cd /home/ubuntu/portfolio
       docker-compose down
       docker-compose up -d --build
+      # Wait a few seconds to ensure container is up
+      sleep 10
 
       # Post-deploy Laravel setup inside container
-      docker exec portfolio_app_1 bash -c "
-        cp .env.example .env || true
-        php artisan key:generate
-        php artisan config:clear
-        php artisan cache:clear
-        php artisan view:clear
-
-        chown -R www-data:www-data storage bootstrap/cache
-        chmod -R ug+rwX storage bootstrap/cache
-      "
+      docker exec portfolio_app_1 cp .env.example .env
+      docker exec portfolio_app_1 php artisan key:generate
+      docker exec portfolio_app_1 php artisan config:clear
+      docker exec portfolio_app_1 php artisan cache:clear
+      docker exec portfolio_app_1 php artisan view:clear
+      docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
+      docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
