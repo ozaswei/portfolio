@@ -15,14 +15,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Copy files to EC2 via SCP
-  	uses: appleboy/scp-action@v0.1.4
-  	with:
-    		host: ${{ secrets.EC2_HOST }}
-    		username: ${{ secrets.EC2_USERNAME }}
-    		key: ${{ secrets.EC2_KEY }}
-    		source: "./"
-    		target: "/home/ubuntu/portfolio/"
-    		rm: true
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          source: "./"
+          target: "/home/ubuntu/portfolio/"
+          rm: true
 
       - name: Run deployment over SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -32,20 +32,14 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/portfolio
-
             chmod -R u+w .
-
             # Decode .env from GitHub Secret
             echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
-
             echo "===== .env preview ====="
             head -n 10 .env
-
             docker-compose down
             docker-compose up -d --build
-
             docker cp .env portfolio_app_1:/var/www/html/.env
-
             docker exec portfolio_app_1 git config --global --add safe.directory /var/www/html
             docker exec portfolio_app_1 php artisan config:clear
             docker exec portfolio_app_1 php artisan key:generate
