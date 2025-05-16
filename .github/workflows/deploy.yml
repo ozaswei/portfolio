@@ -22,7 +22,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           source: "./"
           target: "/home/ubuntu/portfolio/"
-          rm: true
+          rm: false
+	  overwrite: true
 
       - name: Run deployment over SSH
         uses: appleboy/ssh-action@v1.0.0
