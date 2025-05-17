@@ -1,4 +1,4 @@
-name: Deploy Laravel Docker to AWS EC2
+name: Deploy Laravel App
 
 on:
   push:
@@ -7,68 +7,58 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Create clean tarball for deploy
-        run: |
-          git archive --format=tar.gz HEAD -o clean.tar.gz
-          
-      - name: Copy files to EC2 via SCP
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "./"
-          target: "/home/ubuntu/portfolio/"
-          rm: false
-          overwrite: true
-          strip_components: 0
-          tar_dereference: false
-          tar_exec: tar
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
 
-      - name: Run deployment over SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            cd /home/ubuntu/portfolio
+    - name: Remove non-deployable Laravel directories
+      run: |
+        rm -rf storage bootstrap/cache node_modules vendor
 
-            # Ensure write access
-            chmod -R u+w .
-            sudo chmod -R u+w /home/ubuntu/portfolio
+    - name: Upload project to remote server
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        source: ./
+        target: /home/ubuntu/portfolio/
+        rm: false
+        overwrite: true
+        strip_components: 0
+        tar_dereference: false
+        tar_exec: tar
 
-            # Inject real .env from GitHub Secret (base64)
-            echo "${{ secrets.ENV_B64 }}" | base64 -d > .env
+    - name: Run Laravel setup over SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /home/ubuntu/portfolio
 
-            echo "===== .env preview ====="
-            head -n 10 .env
+          # Recreate writable dirs
+          mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
 
-            # Stop and rebuild containers
-            docker-compose down
-            docker-compose up -d --build
+          # Set permissions
+          chmod -R ug+rwX storage bootstrap/cache || true
+          chown -R www-data:www-data storage bootstrap/cache || true
 
-            # Copy .env inside the container
-            docker cp .env portfolio_app_1:/var/www/html/.env
-
-            # Trust repo inside container & run Laravel setup
-            docker exec portfolio_app_1 git config --global --add safe.directory /var/www/html
-            docker exec portfolio_app_1 composer install --no-dev --optimize-autoloader
-            docker exec portfolio_app_1 php artisan config:clear
-            docker exec portfolio_app_1 php artisan key:generate
-            docker exec portfolio_app_1 php artisan cache:clear
-            docker exec portfolio_app_1 php artisan view:clear
-
-            # Fix permissions
-            docker exec portfolio_app_1 chown -R www-data:www-data storage bootstrap/cache
-            docker exec portfolio_app_1 chmod -R ug+rwX storage bootstrap/cache
-
-            # (Optional) Run database migrations
-            docker exec portfolio_app_1 php artisan migrate --force
+          # Laravel setup
+          docker-compose down
+          docker-compose up -d --build
+          docker-compose exec app composer install --no-dev --optimize-autoloader
+          docker-compose exec app php artisan config:clear
+          docker-compose exec app php artisan key:generate
+          docker-compose exec app php artisan migrate --force || true
