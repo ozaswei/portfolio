@@ -14,6 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Create clean tarball for deploy
+        run: |
+          git archive --format=tar.gz HEAD -o clean.tar.gz
+          
       - name: Copy files to EC2 via SCP
         uses: appleboy/scp-action@v0.1.4
         with:
