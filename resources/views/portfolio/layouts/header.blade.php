@@ -23,9 +23,9 @@
 <meta property="og:image:width" content="200" />
 <meta property="og:image:height" content="200" />
 <!-- font icons -->
-<link rel="stylesheet" href="{{url('frontPage/assets/vendors/themify-icons/css/themify-icons.css')}}">
+<link rel="stylesheet" href="{{asset('/frontPage/assets/vendors/themify-icons/css/themify-icons.css')}}">
 <!-- Bootstrap + JohnDoe main styles -->
-<link rel="stylesheet" href="{{url('frontPage/assets/css/johndoe.css')}}">
+<link rel="stylesheet" href="{{asset('/frontPage/assets/css/johndoe.css')}}">
 <!-- Cdn bootstrap -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
 <!--font awesome -->

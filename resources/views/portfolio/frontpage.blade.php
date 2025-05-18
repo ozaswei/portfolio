@@ -24,7 +24,7 @@
                 <p>Committed to lifelong learning and professional growth, I actively participate in industry conferences and workshops to keep abreast of the latest technological advances. </p>
                 <p>📚🌱 If you're keen on enhancing your organization's cybersecurity measures or pushing the envelope in web development, let’s connect and make impactful strides together! 🤝🔗🚀</p>
                 <!-- <button class="btn btn-outline-danger"><i class="icon-down-circled2 "></i>Download My CV</button> -->
-                <a class="btn btn-outline-danger" href="{{url('frontPage/files/resume.pdf')}}" download target="_blank"><i
+                <a class="btn btn-outline-danger" href="{{asset('/frontPage/files/resume.pdf')}}" download target="_blank"><i
                         class="icon-down-circled2 "></i>Download My CV</a>
             </div>
             <div class="col-lg-4 about-card">
@@ -297,12 +297,12 @@
             <div class="text-center">
                 <a href="https://www.credly.com/earner/earned/badge/5223bfe5-e043-4da1-a083-056f3f748bd5"
                     target="_blank" class="mr-5">
-                    <img src="{{url('frontPage/images/comptia-security-ce-certification.png')}}" alt="Comptia Security Plus Badge"
+                    <img src="{{asset('/frontPage/images/comptia-security-ce-certification.png')}}" alt="Comptia Security Plus Badge"
                         width="20%">
                 </a>
                 <a href="https://www.credly.com/badges/226b15a3-aa1d-4d19-8707-e83f76f23915/linked_in_profile"
                     target="_blank">
-                    <img src="{{url('frontPage/images/google.png')}}" alt="Google Cybersecurity Professional Badge" width="30%">
+                    <img src="{{asset('/frontPage/images/google.png')}}" alt="Google Cybersecurity Professional Badge" width="30%">
                 </a>
             </div>
         </div>
@@ -336,7 +336,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card card-body">
-                        <img src="{{url('frontPage/images/cyber6.jpg')}}" alt="cyber6">
+                        <img src="{{asset('/frontPage/images/cyber6.jpg')}}" alt="cyber6">
                     </div>
                 </div>
             </div>
@@ -364,7 +364,7 @@
                 <div class="portfolio-container">
                     <div class="col-md-6 col-lg-4 web new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/1.jpg')}}" class="img-fluid" alt="1">
+                            <img src="{{asset('/frontPage/images/1.jpg')}}" class="img-fluid" alt="1">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-1.jpg"></a>
                                 <div class="text-holder">
@@ -376,7 +376,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 web new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/2.jpg')}}" class="img-fluid" alt="2">
+                            <img src="{{asset('/frontPage/images/2.jpg')}}" class="img-fluid" alt="2">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-2.jpg"></a>
                                 <div class="text-holder">
@@ -388,7 +388,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 advertising new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/3.jpg')}}" class="img-fluid" alt="3">
+                            <img src="{{asset('/frontPage/images/3.jpg')}}" class="img-fluid" alt="3">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-2.jpg"></a>
                                 <div class="text-holder">
@@ -400,9 +400,9 @@
                     </div>
                     <div class="col-md-6 col-lg-4 web">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/assets/imgs/web-4.jpg')}}" class="img-fluid" alt="4">
+                            <img src="{{asset('/frontPage/assets/imgs/web-4.jpg')}}" class="img-fluid" alt="4">
                             <div class="content-holder">
-                                <a class="img-popup" href="{{url('frontPage/assets/imgs/web-4.jpg')}}"></a>
+                                <a class="img-popup" href="{{asset('/frontPage/assets/imgs/web-4.jpg')}}"></a>
                                 <div class="text-holder">
                                     <h6 class="title">WEB</h6>
                                     <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
@@ -413,9 +413,9 @@
 
                     <div class="col-md-6 col-lg-4 advertising">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/assets/imgs/advertising-1.jpg')}}" class="img-fluid" alt="6">
+                            <img src="{{asset('/frontPage/assets/imgs/advertising-1.jpg')}}" class="img-fluid" alt="6">
                             <div class="content-holder">
-                                <a class="img-popup" href="{{url('frontPage/assets/imgs/advertising-1.jpg')}}"></a>
+                                <a class="img-popup" href="{{asset('/frontPage/assets/imgs/advertising-1.jpg')}}"></a>
                                 <div class="text-holder">
                                     <h6 class="title">ADVERSITING</h6>
                                     <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
@@ -425,7 +425,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 web new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/5.jpg')}}" class="img-fluid" alt="5">
+                            <img src="{{asset('/frontPage/images/5.jpg')}}" class="img-fluid" alt="5">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/web-3.jpg"></a>
                                 <div class="text-holder">
@@ -437,7 +437,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 advertising new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/4.png')}}" class="img-fluid" alt="4">
+                            <img src="{{asset('/frontPage/images/4.png')}}" class="img-fluid" alt="4">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-3.jpg"></a>
                                 <div class="text-holder">
@@ -449,7 +449,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 advertising new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/8.jpg')}}" class="img-fluid" alt="8">
+                            <img src="{{asset('/frontPage/images/8.jpg')}}" class="img-fluid" alt="8">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/advertising-4.jpg"></a>
                                 <div class="text-holder">
@@ -462,7 +462,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 branding new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/6.jpg')}}" class="img-fluid" alt="6">
+                            <img src="{{asset('/frontPage/images/6.jpg')}}" class="img-fluid" alt="6">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/branding-1.jpg"></a>
                                 <div class="text-holder">
@@ -474,10 +474,10 @@
                     </div>
                     <div class="col-md-6 col-lg-4 branding">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/assets/imgs/branding-2.jpg')}}" class="img-fluid"
+                            <img src="{{asset('/frontPage/assets/imgs/branding-2.jpg')}}" class="img-fluid"
                                 alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
                             <div class="content-holder">
-                                <a class="img-popup" href="{{url('frontPage/assets/imgs/branding-2.jpg')}}"></a>
+                                <a class="img-popup" href="{{asset('/frontPage/assets/imgs/branding-2.jpg')}}"></a>
                                 <div class="text-holder">
                                     <h6 class="title">BRANDING</h6>
                                     <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
@@ -487,7 +487,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4 branding new">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/images/7.jpg')}}" class="img-fluid"
+                            <img src="{{asset('/frontPage/images/7.jpg')}}" class="img-fluid"
                                 alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
                             <!-- <div class="content-holder">
                                 <a class="img-popup" href="assets/imgs/branding-3.jpg"></a>
@@ -500,10 +500,10 @@
                     </div>
                     <div class="col-md-6 col-lg-4 branding">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/assets/imgs/branding-4.jpg')}}" class="img-fluid"
+                            <img src="{{asset('/frontPage/assets/imgs/branding-4.jpg')}}" class="img-fluid"
                                 alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
                             <div class="content-holder">
-                                <a class="img-popup" href="{{url('frontPage/assets/imgs/branding-4.jpg')}}"></a>
+                                <a class="img-popup" href="{{asset('/frontPage/assets/imgs/branding-4.jpg')}}"></a>
                                 <div class="text-holder">
                                     <h6 class="title">BRANDING</h6>
                                     <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
@@ -513,10 +513,10 @@
                     </div>
                     <div class="col-md-6 col-lg-4 branding">
                         <div class="portfolio-item">
-                            <img src="{{url('frontPage/assets/imgs/branding-5.jpg')}}" class="img-fluid"
+                            <img src="{{asset('frontPage/assets/imgs/branding-5.jpg')}}" class="img-fluid"
                                 alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
                             <div class="content-holder">
-                                <a class="img-popup" href="{{url('frontPage/assets/imgs/branding-5.jpg')}}"></a>
+                                <a class="img-popup" href="{{url('/frontPage/assets/imgs/branding-5.jpg')}}"></a>
                                 <div class="text-holder">
                                     <h6 class="title">BRANDING</h6>
                                     <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
@@ -569,9 +569,9 @@
             </div>
         </div>
         <div class="animationDiv">
-            <img class="walkingMan" src="{{url('frontPage/images/walking.gif')}}">
-            <img class="walkingDog" src="{{url('frontPage/images/walkingDog.gif')}}">
-            <img class="walkingCat" src="{{url('frontPage/images/walkingCat.gif')}}">
+            <img class="walkingMan" src="{{asset('/frontPage/images/walking.gif')}}">
+            <img class="walkingDog" src="{{asset('/frontPage/images/walkingDog.gif')}}">
+            <img class="walkingCat" src="{{asset('/frontPage/images/walkingCat.gif')}}">
         </div>
     </div>
     <!-- End of contact me  -->

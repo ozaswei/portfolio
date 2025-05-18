@@ -18,7 +18,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav brand">
-                    <img src="{{url('frontPage/assets/imgs/avatar.jpg')}}" alt="" class="brand-img">
+                    <img src="{{asset('/frontPage/assets/imgs/avatar.jpg')}}" alt="" class="brand-img">
                     <li class="brand-txt">
                         <h5 class="brand-title">Ozaswei Bahadur Tamrakar</h5>
                         <div class="brand-subtitle">Web Developer and a Cyber Security Specialist</div>
