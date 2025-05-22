@@ -2,23 +2,35 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio_app_1
     ports:
       - "80:80"
     volumes:
       - .:/var/www/html
     depends_on:
       - db
+    networks:
+      - portfolio
 
   db:
     image: mysql:8.0
+    container_name: portfolio_db_1
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: ozaswei
       MYSQL_PASSWORD: secret
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - portfolio
 
 volumes:
   db_data:
+
+networks:
+  portfolio:
