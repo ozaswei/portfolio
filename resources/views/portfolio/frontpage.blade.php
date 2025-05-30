@@ -392,6 +392,7 @@
                         <p class="tech">Xcitium Platform</p>
                         <p class="desc">Built multi-layered endpoint defense system with scalable deployment for
                             enterprises.</p>
+                        <a href="https://cyber6ix.github.io/" target="_blank" style="text-decoration: underline; color: lightgrey">View Site</a>
                     </div>
                     <div class="project-card">
                         <h3>IT Support Lab Simulations</h3>
