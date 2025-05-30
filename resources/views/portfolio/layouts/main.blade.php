@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    @include('portfolio.layouts.secondaryHeaderContainer')
-    @include('portfolio.layouts.navbar')
+    @yield('secondaryHeaderDiv')
+    @yield('navbar')
     @yield('mainBody')
     @include('portfolio.layouts.footer')
 </body>

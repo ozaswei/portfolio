@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="Devcrud">
+<meta name="author" content="ozaswei">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Ozaswei | Portfolio</title>
 <meta name="keywords"
     content="Ozaswei, Ozaswei Bahadur, Ozaswei Bahadur Tamrakar, ozaswei, ozaswei bahadur, ozaswei bahadur tamrakar, OZASWEI, OZASWEI BAHADUR, OZASWEI BAHADUR TAMRAKAR" />
@@ -26,12 +27,15 @@
 <link rel="stylesheet" href="{{asset('/frontPage/assets/vendors/themify-icons/css/themify-icons.css')}}">
 <!-- Bootstrap + JohnDoe main styles -->
 <link rel="stylesheet" href="{{asset('/frontPage/assets/css/johndoe.css')}}">
+<!-- project section css  -->
+<link rel="stylesheet" href="{{asset('/frontPage/assets/css/projectSection.css')}}">
+<!-- portfolio section css  -->
+<link rel="stylesheet" href="{{asset('/frontPage/assets/css/portfolioSection.css')}}">
 <!-- Cdn bootstrap -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
 <!--font awesome -->
 <style>
     body {
-        background: linear-gradient(135deg, #34495e, #2c3e50);
         font-family: 'Poppins', sans-serif;
     }
 
