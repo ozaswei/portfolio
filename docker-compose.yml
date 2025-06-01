@@ -11,6 +11,8 @@ services:
       - "444:443"
     volumes:
       - .:/var/www/html
+      - certbot-etc:/etc/letsencrypt       # Persist certs
+      - certbot-var:/var/lib/letsencrypt   # Persist cert logs/data
     depends_on:
       - db
     networks:
@@ -32,6 +34,8 @@ services:
 
 volumes:
   db_data:
+  certbot-etc:
+  certbot-var:
 
 networks:
   portfolio:
