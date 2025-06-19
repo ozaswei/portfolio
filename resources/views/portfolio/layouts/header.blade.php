@@ -10,7 +10,7 @@
 
 <meta property="og:type" content="website">
 
-<!--    <link rel="icon" type="image/gif/png" href="{{URL::to('/images/logo2.png')}}">-->
+<!--    <link rel="icon" type="image/gif/png" href="{{ URL::to('/images/logo2.png') }}">-->
 <meta name="description" content="Brief portfolio of Ozaswei" />
 
 <meta name="title" property="og:title" content="Ozaswei | Portfolio">
@@ -24,32 +24,25 @@
 <meta property="og:image:width" content="200" />
 <meta property="og:image:height" content="200" />
 <!-- font icons -->
-<link rel="stylesheet" href="{{asset('/frontPage/assets/vendors/themify-icons/css/themify-icons.css')}}">
+<link rel="stylesheet" href="{{ asset('/frontPage/assets/vendors/themify-icons/css/themify-icons.css') }}">
+
+<!-- google fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
+
 <!-- Bootstrap + JohnDoe main styles -->
-<link rel="stylesheet" href="{{asset('/frontPage/assets/css/johndoe.css')}}">
+<link rel="stylesheet" href="{{ asset('/frontPage/assets/css/johndoe.css') }}">
 <!-- project section css  -->
-<link rel="stylesheet" href="{{asset('/frontPage/assets/css/projectSection.css')}}">
+<link rel="stylesheet" href="{{ asset('/frontPage/assets/css/projectSection.css') }}">
 <!-- portfolio section css  -->
-<link rel="stylesheet" href="{{asset('/frontPage/assets/css/portfolioSection.css')}}">
+<link rel="stylesheet" href="{{ asset('/frontPage/assets/css/portfolioSection.css') }}">
 <!-- Cdn bootstrap -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
 <!--font awesome -->
+<!-- Custom Header -->
+@yield('customHeader')
 <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .card {
-        background-color: #dcd6f7;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-    }
-
     .portfolio-item img {
         transition: transform 0.3s ease;
     }
@@ -102,9 +95,9 @@
     }
 
     .contact {
-        background-image: url('frontPage/images/image8.1.gif'); 
-        background-position: center; 
-        background-repeat: no-repeat; 
+        background-image: url('frontPage/images/image8.1.gif');
+        background-position: center;
+        background-repeat: no-repeat;
         background-size: cover;
     }
 
@@ -209,4 +202,6 @@
             /* Move off the left side */
         }
     }
+
+    @yield('customStyle')
 </style>

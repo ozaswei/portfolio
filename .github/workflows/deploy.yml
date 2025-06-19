@@ -9,56 +9,99 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      # Remote host and secrets
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # 1) Pull repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+      # 2) Configure SSH
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
 
-    - name: Remove non-deployable Laravel directories
-      run: |
-        rm -rf storage bootstrap/cache node_modules vendor
+      # 3) Remove folders that shouldn’t be uploaded
+      - name: Remove non-deployable Laravel directories
+        run: |
+          rm -rf storage bootstrap/cache node_modules vendor
 
-    - name: Upload project to remote server
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        source: ./
-        target: /home/ubuntu/portfolio/
-        rm: false
-        overwrite: true
-        strip_components: 0
-        tar_dereference: false
-        tar_exec: tar
+      # 4) Upload project code to EC2
+      - name: Upload project to remote server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "./"
+          target: "/home/ubuntu/portfolio/"
+          rm: false
+          overwrite: true
+          strip_components: 0
+          tar_dereference: false
+          tar_exec: tar
 
-    - name: Run Laravel setup over SSH
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-          cd /home/ubuntu/portfolio
+      # 5) Configure environment & deploy via SSH
+      - name: Configure and deploy on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            set -e
+            cd /home/ubuntu/portfolio
 
-          # Recreate writable dirs
-          mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
+            ### Write fresh .env file
+            cat > .env <<EOL
+APP_NAME=Portfolio
+APP_ENV=production
+APP_KEY=base64:hLGMskNsatrHfPHCgmiseOzqHZmtP2ZQMNVGdDhvzHQ=
+APP_DEBUG=false
+APP_URL=https://ozaswei.com.np
 
-          # Set permissions
-          chmod -R ug+rwX storage bootstrap/cache || true
-          chown -R www-data:www-data storage bootstrap/cache || true
+LOG_CHANNEL=stack
+LOG_LEVEL=error
 
-          # Laravel setup
-          docker-compose down
-          docker-compose up -d --build
-          docker-compose exec app composer install --no-dev --optimize-autoloader
-          docker-compose exec app php artisan config:clear
-          docker-compose exec app php artisan key:generate
-          docker-compose exec app php artisan migrate --force || true
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=portfolio
+DB_USERNAME=ozaswei
+DB_PASSWORD=secret
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+FILESYSTEM_DISK=local
+
+SERPAPI_KEY=${{ env.SERPAPI_KEY }}
+EOL
+
+            ### Re-create writable directories & set permissions
+            mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
+            chmod -R ug+rwX storage bootstrap/cache
+            chown -R www-data:www-data storage bootstrap/cache || true
+
+            ### Re-build Docker containers
+            docker-compose down
+            docker-compose up -d --build
+
+            ### Composer install (inside app container)
+            docker-compose exec app composer install --no-dev --optimize-autoloader
+
+            ### Laravel cache & migrations
+            docker-compose exec app php artisan config:clear
+            docker-compose exec app php artisan config:cache
+            docker-compose exec app php artisan key:generate --force
+            docker-compose exec app php artisan migrate --force || true

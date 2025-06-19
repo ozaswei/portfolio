@@ -1,4 +1,20 @@
 @extends('portfolio.layouts.main')
+@section('customStyle')
+    body {
+    font-family: 'Poppins', sans-serif;
+    }
+
+    .card {
+    background-color: #dcd6f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    }
+
+    .card:hover {
+    transform: scale(1.05);
+    }
+@endsection
 @section('secondaryHeaderDiv')
     @include('portfolio.layouts.secondaryHeaderContainer')
 @endsection
@@ -375,6 +391,8 @@
                         <p class="tech">Laravel, JavaScript, jQuery</p>
                         <p class="desc">Search system showing salary ranges by job title and country using web scraping
                             logic.</p>
+                            <a href="{{route('salarySurvey')}}" target="_blank"
+                            style="text-decoration: underline; color: lightgrey">View</a>
                     </div>
                     <div class="project-card">
                         <h3>Single-Page Website Generator</h3>
@@ -392,7 +410,8 @@
                         <p class="tech">Xcitium Platform</p>
                         <p class="desc">Built multi-layered endpoint defense system with scalable deployment for
                             enterprises.</p>
-                        <a href="https://cyber6ix.github.io/" target="_blank" style="text-decoration: underline; color: lightgrey">View Site</a>
+                        <a href="https://cyber6ix.github.io/" target="_blank"
+                            style="text-decoration: underline; color: lightgrey">View</a>
                     </div>
                     <div class="project-card">
                         <h3>IT Support Lab Simulations</h3>

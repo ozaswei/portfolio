@@ -9,6 +9,7 @@ class SalarySurveyController extends Controller
     public function salarySurveyFrontPage()
     {
         $results = false;
-        return view('portfolio.salarySurvey',compact('results'));
+        $noJob = false;
+        return view('portfolio.salarySurvey',compact('results','noJob'));
     }
 }
