@@ -51,13 +51,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            set -e
             cd /home/ubuntu/portfolio
 
-            # Write fresh .env file
-            cat > .env <<EOL
-APP_NAME=Portfolio
+            # Write the .env file
+            tee .env > /dev/null <<EOF
 APP_ENV=production
+APP_NAME=Portfolio
 APP_KEY=base64:hLGMskNsatrHfPHCgmiseOzqHZmtP2ZQMNVGdDhvzHQ=
 APP_DEBUG=false
 APP_URL=https://ozaswei.com.np
@@ -80,18 +79,16 @@ QUEUE_CONNECTION=sync
 FILESYSTEM_DISK=local
 
 SERPAPI_KEY=${{ env.SERPAPI_KEY }}
-EOL
+EOF
 
-            # Laravel writable dirs & permissions
+            # Laravel permissions
             mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
             chmod -R ug+rwX storage bootstrap/cache
             chown -R www-data:www-data storage bootstrap/cache || true
 
-            # Docker build and run
+            # Docker build and Laravel setup
             docker-compose down
             docker-compose up -d --build
-
-            # Laravel setup
             docker-compose exec app composer install --no-dev --optimize-autoloader --no-interaction
             docker-compose exec app php artisan config:clear
             docker-compose exec app php artisan config:cache
