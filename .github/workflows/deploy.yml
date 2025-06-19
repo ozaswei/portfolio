@@ -3,60 +3,79 @@ name: Deploy Laravel App
 on:
   push:
     branches:
-      - master
+      - master            # deploy only when master branch is pushed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     env:
-      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+      REMOTE_HOST:  ${{ secrets.REMOTE_HOST }}
+      SERPAPI_KEY:  ${{ secrets.SERPAPI_KEY }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
+    # --------------------------------------------------
+    # 1.  Check out repository
+    # --------------------------------------------------
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Remove non-deployable Laravel directories
-        run: |
-          rm -rf storage bootstrap/cache node_modules vendor
+    # --------------------------------------------------
+    # 2.  Configure SSH for EC2 access
+    # --------------------------------------------------
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
 
-      - name: Upload project to remote server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ env.REMOTE_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "./"
-          target: "/home/ubuntu/portfolio/"
-          rm: false
-          overwrite: true
-          strip_components: 0
-          tar_dereference: false
-          tar_exec: tar
+    # --------------------------------------------------
+    # 3.  Remove directories that should not be uploaded
+    # --------------------------------------------------
+    - name: Remove non-deployable Laravel directories
+      run: |
+        rm -rf storage bootstrap/cache node_modules vendor
 
-      - name: Configure and deploy on EC2
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ env.REMOTE_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            cd /home/ubuntu/portfolio
+    # --------------------------------------------------
+    # 4.  Upload project to the EC2 server
+    # --------------------------------------------------
+    - name: Upload project to remote server
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host:        ${{ env.REMOTE_HOST }}
+        username:    ubuntu
+        key:         ${{ secrets.SSH_PRIVATE_KEY }}
+        port:        22
+        source:      "./"
+        target:      "/home/ubuntu/portfolio/"
+        rm:          false
+        overwrite:   true
+        strip_components: 0
+        tar_dereference:  false
+        tar_exec:     tar
 
-            # Write the .env file
-            tee .env > /dev/null <<EOF
-APP_ENV=production
+    # --------------------------------------------------
+    # 5.  Configure environment & deploy via SSH
+    # --------------------------------------------------
+    - name: Configure and deploy on EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host:       ${{ env.REMOTE_HOST }}
+        username:   ubuntu
+        key:        ${{ secrets.SSH_PRIVATE_KEY }}
+        port:       22
+        script: |
+          set -e
+          cd /home/ubuntu/portfolio
+
+          # --------------------------------------------
+          # 5a.  Write a fresh .env file (no indentation)
+          # --------------------------------------------
+          bash -c 'cat > .env <<EOF
 APP_NAME=Portfolio
+APP_ENV=production
 APP_KEY=base64:hLGMskNsatrHfPHCgmiseOzqHZmtP2ZQMNVGdDhvzHQ=
 APP_DEBUG=false
 APP_URL=https://ozaswei.com.np
@@ -78,19 +97,27 @@ CACHE_DRIVER=file
 QUEUE_CONNECTION=sync
 FILESYSTEM_DISK=local
 
-SERPAPI_KEY=${{ env.SERPAPI_KEY }}
-EOF
+SERPAPI_KEY='"${SERPAPI_KEY}"'
+EOF'
 
-            # Laravel permissions
-            mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
-            chmod -R ug+rwX storage bootstrap/cache
-            chown -R www-data:www-data storage bootstrap/cache || true
+          # --------------------------------------------
+          # 5b.  Ensure writable directories & perms
+          # --------------------------------------------
+          mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
+          chmod -R ug+rwX storage bootstrap/cache
+          chown -R www-data:www-data storage bootstrap/cache || true
 
-            # Docker build and Laravel setup
-            docker-compose down
-            docker-compose up -d --build
-            docker-compose exec app composer install --no-dev --optimize-autoloader --no-interaction
-            docker-compose exec app php artisan config:clear
-            docker-compose exec app php artisan config:cache
-            docker-compose exec app php artisan key:generate --force
-            docker-compose exec app php artisan migrate --force || true
+          # --------------------------------------------
+          # 5c.  Rebuild and start Docker containers
+          # --------------------------------------------
+          docker-compose down
+          docker-compose up -d --build
+
+          # --------------------------------------------
+          # 5d.  Laravel setup in the app container
+          # --------------------------------------------
+          docker-compose exec app composer install --no-dev --optimize-autoloader --no-interaction
+          docker-compose exec app php artisan config:clear
+          docker-compose exec app php artisan config:cache
+          docker-compose exec app php artisan key:generate --force
+          docker-compose exec app php artisan migrate --force || true
