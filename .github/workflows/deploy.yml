@@ -3,121 +3,80 @@ name: Deploy Laravel App
 on:
   push:
     branches:
-      - master            # deploy only when master branch is pushed
+      - master            # deploy only when master is pushed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      REMOTE_HOST:  ${{ secrets.REMOTE_HOST }}
-      SERPAPI_KEY:  ${{ secrets.SERPAPI_KEY }}
-
     steps:
-
-    # --------------------------------------------------
-    # 1.  Check out repository
-    # --------------------------------------------------
+    # 1 – Check out repo
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # --------------------------------------------------
-    # 2.  Configure SSH for EC2 access
-    # --------------------------------------------------
+    # 2 – Set up SSH
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
+        ssh-keyscan -H "${{ secrets.REMOTE_HOST }}" >> ~/.ssh/known_hosts
 
-    # --------------------------------------------------
-    # 3.  Remove directories that should not be uploaded
-    # --------------------------------------------------
+    # 3 – Remove local folders you don’t want to upload
     - name: Remove non-deployable Laravel directories
       run: |
         rm -rf storage bootstrap/cache node_modules vendor
 
-    # --------------------------------------------------
-    # 4.  Upload project to the EC2 server
-    # --------------------------------------------------
+    # 4 – Upload the project to EC2
     - name: Upload project to remote server
       uses: appleboy/scp-action@v0.1.4
       with:
-        host:        ${{ env.REMOTE_HOST }}
-        username:    ubuntu
-        key:         ${{ secrets.SSH_PRIVATE_KEY }}
-        port:        22
-        source:      "./"
-        target:      "/home/ubuntu/portfolio/"
-        rm:          false
-        overwrite:   true
+        host:       ${{ secrets.REMOTE_HOST }}
+        username:   ubuntu
+        key:        ${{ secrets.SSH_PRIVATE_KEY }}
+        port:       22
+        source:     ./
+        target:     /home/ubuntu/portfolio/
+        overwrite:  true
         strip_components: 0
-        tar_dereference:  false
-        tar_exec:     tar
 
-    # --------------------------------------------------
-    # 5.  Configure environment & deploy via SSH
-    # --------------------------------------------------
-    - name: Configure and deploy on EC2
+    # 5 – SSH, inject SERPAPI_KEY, rebuild containers, run artisan
+    - name: Run Laravel setup over SSH
       uses: appleboy/ssh-action@v1.0.0
       with:
-        host:       ${{ env.REMOTE_HOST }}
+        host:       ${{ secrets.REMOTE_HOST }}
         username:   ubuntu
         key:        ${{ secrets.SSH_PRIVATE_KEY }}
         port:       22
         script: |
-          set -e
           cd /home/ubuntu/portfolio
 
-          # --------------------------------------------
-          # 5a.  Write a fresh .env file (no indentation)
-          # --------------------------------------------
-          bash -c 'cat > .env <<EOF
-APP_NAME=Portfolio
-APP_ENV=production
-APP_KEY=base64:hLGMskNsatrHfPHCgmiseOzqHZmtP2ZQMNVGdDhvzHQ=
-APP_DEBUG=false
-APP_URL=https://ozaswei.com.np
+          # ------------------------------------------------------------------
+          # Inject or update SERPAPI_KEY in .env (single YAML-safe line)
+          # ------------------------------------------------------------------
+          if grep -q '^SERPAPI_KEY=' .env 2>/dev/null; then
+            sed -i "s/^SERPAPI_KEY=.*/SERPAPI_KEY=${{ secrets.SERPAPI_KEY }}/" .env
+          else
+            echo "SERPAPI_KEY=${{ secrets.SERPAPI_KEY }}" >> .env
+          fi
 
-LOG_CHANNEL=stack
-LOG_LEVEL=error
-
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=portfolio
-DB_USERNAME=ozaswei
-DB_PASSWORD=secret
-
-SESSION_DRIVER=database
-SESSION_LIFETIME=120
-
-CACHE_DRIVER=file
-QUEUE_CONNECTION=sync
-FILESYSTEM_DISK=local
-
-SERPAPI_KEY='"${SERPAPI_KEY}"'
-EOF'
-
-          # --------------------------------------------
-          # 5b.  Ensure writable directories & perms
-          # --------------------------------------------
+          # ------------------------------------------------------------------
+          # Recreate writable dirs & set permissions
+          # ------------------------------------------------------------------
           mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
-          chmod -R ug+rwX storage bootstrap/cache
+          chmod -R ug+rwX storage bootstrap/cache || true
           chown -R www-data:www-data storage bootstrap/cache || true
 
-          # --------------------------------------------
-          # 5c.  Rebuild and start Docker containers
-          # --------------------------------------------
+          # ------------------------------------------------------------------
+          # Rebuild Docker containers
+          # ------------------------------------------------------------------
           docker-compose down
           docker-compose up -d --build
 
-          # --------------------------------------------
-          # 5d.  Laravel setup in the app container
-          # --------------------------------------------
-          docker-compose exec app composer install --no-dev --optimize-autoloader --no-interaction
+          # ------------------------------------------------------------------
+          # Laravel commands
+          # ------------------------------------------------------------------
+          docker-compose exec app composer install --no-dev --optimize-autoloader
           docker-compose exec app php artisan config:clear
-          docker-compose exec app php artisan config:cache
-          docker-compose exec app php artisan key:generate --force
+          docker-compose exec app php artisan key:generate   # keeps your APP_KEY line
           docker-compose exec app php artisan migrate --force || true
