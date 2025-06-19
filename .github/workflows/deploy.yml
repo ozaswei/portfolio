@@ -10,16 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Remote host and secrets
       REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
       SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
 
     steps:
-      # 1) Pull repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2) Configure SSH
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
@@ -27,12 +24,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "$REMOTE_HOST" >> ~/.ssh/known_hosts
 
-      # 3) Remove folders that shouldn’t be uploaded
       - name: Remove non-deployable Laravel directories
         run: |
           rm -rf storage bootstrap/cache node_modules vendor
 
-      # 4) Upload project code to EC2
       - name: Upload project to remote server
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -48,7 +43,6 @@ jobs:
           tar_dereference: false
           tar_exec: tar
 
-      # 5) Configure environment & deploy via SSH
       - name: Configure and deploy on EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -60,7 +54,7 @@ jobs:
             set -e
             cd /home/ubuntu/portfolio
 
-            ### Write fresh .env file
+            # Write fresh .env file
             cat > .env <<EOL
 APP_NAME=Portfolio
 APP_ENV=production
@@ -88,19 +82,17 @@ FILESYSTEM_DISK=local
 SERPAPI_KEY=${{ env.SERPAPI_KEY }}
 EOL
 
-            ### Re-create writable directories & set permissions
+            # Laravel writable dirs & permissions
             mkdir -p storage/framework/{cache,data,sessions,views} storage/logs bootstrap/cache
             chmod -R ug+rwX storage bootstrap/cache
             chown -R www-data:www-data storage bootstrap/cache || true
 
-            ### Re-build Docker containers
+            # Docker build and run
             docker-compose down
             docker-compose up -d --build
 
-            ### Composer install (inside app container)
-            docker-compose exec app composer install --no-dev --optimize-autoloader
-
-            ### Laravel cache & migrations
+            # Laravel setup
+            docker-compose exec app composer install --no-dev --optimize-autoloader --no-interaction
             docker-compose exec app php artisan config:clear
             docker-compose exec app php artisan config:cache
             docker-compose exec app php artisan key:generate --force
