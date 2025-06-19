@@ -188,7 +188,7 @@
             </div>
         @endif
         <!-- Back Button -->
-        <a href="http://portfolio.test/" class="back-btn mb-3">
+        <a href="{{route('frontPage')}}" class="back-btn mb-3">
             ← Back to Portfolio
         </a>
     </div>
