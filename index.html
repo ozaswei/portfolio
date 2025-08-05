@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="Devcrud">
+    <meta name="author" content="ozaswei">
     <title>Ozaswei | Portfolio</title>
     <meta name="keywords"
         content="Ozaswei, Ozaswei Bahadur, Ozaswei Bahadur Tamrakar, ozaswei, ozaswei bahadur, ozaswei bahadur tamrakar, OZASWEI, OZASWEI BAHADUR, OZASWEI BAHADUR TAMRAKAR" />
@@ -13,7 +13,7 @@
 
     <meta property="og:type" content="website">
 
-    <!--    <link rel="icon" type="image/gif/png" href="{{URL::to('/images/logo2.png')}}">-->
+    <!--    <link rel="icon" type="image/gif/png" href="{{ URL::to('/images/logo2.png') }}">-->
     <meta name="description" content="Brief portfolio of Ozaswei" />
 
     <meta name="title" property="og:title" content="Ozaswei | Portfolio">
@@ -28,28 +28,23 @@
     <meta property="og:image:height" content="200" />
     <!-- font icons -->
     <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
+
     <!-- Bootstrap + JohnDoe main styles -->
     <link rel="stylesheet" href="assets/css/johndoe.css">
+    <!-- project section css  -->
+    <link rel="stylesheet" href="assets/css/projectSection.css">
+    <!-- portfolio section css  -->
+    <link rel="stylesheet" href="assets/css/portfolioSection.css">
     <!-- Cdn bootstrap -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
     <!--font awesome -->
+    <!-- Custom Header -->
     <style>
-        body {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .card {
-            background-color: #dcd6f7;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
         .portfolio-item img {
             transition: transform 0.3s ease;
         }
@@ -81,6 +76,11 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        .getintouch {
+            display: flex;
+            flex-direction: column;
+        }
+
         .getintouch h2 {
             color: #333;
             font-size: 28px;
@@ -94,6 +94,13 @@
             line-height: 1.6;
             margin-bottom: 30px;
             text-align: center;
+        }
+
+        .contact {
+            background-image: url('images/image8.1.gif');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         .contact-methods {
@@ -146,28 +153,86 @@
             background-color: #3a7bc8;
         }
 
-        F
+        .animationDiv {
+            position: relative;
+            width: 100%;
+            height: 12vh;
+            /* Responsive height (adjustable) */
+            overflow: hidden;
+            /* Ensures elements that move out of the container are hidden */
+        }
+
+        .walkingMan,
+        .walkingDog,
+        .walkingCat {
+            position: absolute;
+            bottom: 0;
+            /* Align all images to the bottom */
+            width: 60px;
+            /* Fixed width for all images */
+            height: auto;
+            /* Maintain aspect ratio */
+            animation: moveLeft 10s linear infinite;
+            /* Move left with 10s duration, infinite loop */
+        }
+
+        .walkingMan {
+            left: 100%;
+            /* Start outside the right edge */
+        }
+
+        .walkingDog {
+            left: calc(100% + 70px);
+            animation-delay: 0.5s;
+            /* Start next to the man, keeping a gap */
+        }
+
+        .walkingCat {
+            left: calc(100% + 140px);
+            animation-delay: 1s;
+            /* Start next to the dog, maintaining spacing */
+        }
+
+        @keyframes moveLeft {
+            0% {
+                left: 100%;
+                /* Start from the right */
+            }
+
+            100% {
+                left: -200px;
+                /* Move off the left side */
+            }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            background-color: #dcd6f7;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
 <body data-spy="scroll" data-taFrget=".navbar" data-offset="40" id="home">
     <!-- <a href="components.html" class="btn btn-primary btn-component" data-spy="affix" data-offset-top="600"><i class="ti-shift-left-alt"></i> Components</a> -->
-    <header class="header">
+    <header class="header" id="home">
         <div class="container object-contain">
-            <!-- <ul class="social-icons pt-3">
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-facebook" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-twitter" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-google" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-instagram" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-github" aria-hidden="true"></i></a></li>
-            </ul>   -->
-            <div class="header-content">
-                <h4 class="header-subtitle">Hey there, I am</h4>
-                <p class="header-title" style="font-size: 50px;">Ozaswei Bahadur Tamrakar</p>
+            <div class="header-content" style="text-align: center;">
+                <h4 class="header-subtitle" style="letter-spacing: 1px;">Hey there, I am</h4>
+                <p class="header-title" style="font-size: 50px; line-height: 1;">Ozaswei Bahadur Tamrakar</p>
                 <h6 class="header-mono">Web Developer and a Cyber Security Specialist</h6>
                 <!-- <button class="btn btn-primary btn-rounded"><i class="ti-printer pr-2"></i>Print Resume</button> -->
-                <a class="btn btn-primary btn-rounded" href="files/resume.pdf" download target="_blank"><i
-                        class="ti-printer pr-2"></i>Download Resume</a>
+                <a class="btn btn-primary btn-rounded" href="files/resume.pdf" download
+                    target="_blank"><i class="ti-printer pr-2"></i>Download Resume</a>
             </div>
         </div>
     </header>
@@ -202,7 +267,7 @@
                         <a href="#Projects" class="nav-link">Projects</a>
                     </li>
                     <li class="nav-item"></li>
-                        <a href="#portfolio" class="nav-link">Portfolio</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
                     </li>
                     <li class="nav-item">
                         <a href="https://techno-gads.blogspot.com/?zx=da6ed2b013a0b548" class="nav-link"
@@ -215,515 +280,518 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid" style="background-color: whitesmoke;">
-        <div id="about" class="row about-section">
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">Who am I ?</h3>
-                <span class="line mb-5"></span>
-                <h5 class="mb-3"> A Web Developer and a Cyber Security Specialist Located In Our Lovely Earth</h5>
-                <p>Dynamic IT professional with a strong foundation in software engineering and cybersecurity.
-                    Proficient in front-end and back-end development (PHP, Python, Laravel, JavaScript) with extensive
-                    experience in secure software development and risk assessment. Holds a Graduate Certificate in Cyber
-                    Security and a Bachelor's degree in Computer Engineering. </p>
-                <p class="mt-20">Experienced in customer service and sales support, enhancing operational efficiency and
-                    customer satisfaction. Adept at collaborating with teams to develop high-quality solutions, ensuring
-                    accuracy and efficiency. Committed to continuous improvement and robust security measures.</p>
-                <!-- <button class="btn btn-outline-danger"><i class="icon-down-circled2 "></i>Download My CV</button> -->
-                <a class="btn btn-outline-danger" href="files/resume.pdf" download target="_blank"><i
-                        class="icon-down-circled2 "></i>Download My CV</a>
-            </div>
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">Personal Info</h3>
-                <span class="line mb-5"></span>
-                <ul class="mt40 info list-unstyled">
-                    <li><span>Birthdate</span> : 03/08/1995</li>
-                    <li><span>Email</span> : ozaswei@gmail.com</li>
-                    <li><span>Phone</span> : +1 (647) 894-9673</li>
-                </ul>
-                <div>
-                    <a class="social-link text-dark"
-                        href="https://www.linkedin.com/in/ozaswei-bahadur-tamrakar-11a60a168/" target="_blank">
-                        <i class="fab fa-linkedin text-primary" aria-hidden="true" style="font-size: 30px;"></i>
-                    </a>
-                    <a class="social-link text-dark ml-2" href="https://github.com/ozaswei" target="_blank">
-                        <i class="fab fa-github text-primary" aria-hidden="true" style="font-size: 30px;"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">My Expertise</h3>
-                <span class="line mb-5"></span>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-widget icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Web Development</h6>
-                        <p class="subtitle"> Worked as a front-end and back-end developer using PHP, Python and Laravel
-                            Framework in the backend and
-                            JavaScript, jQuery, Bootstrap, CSS, and HTML in frontend.</p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-shield icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Security Guard</h6>
-                        <p class="subtitle">Patrolling the exhibition grounds to ensure guests, exhibitors, and staff
-                            safety and security.</p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-shopping-cart icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Cashier Assistant</h6>
-                        <p class="subtitle">Enhance customer experience by efficiently assisting cashiers, resulting in
-                            increased transaction speed and reduced wait times.</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div data-spy="scroll" data-taFrget=".navbar" data-offset="40" id="home" style="width: 100%;">
+        <!-- <a href="components.html" class="btn btn-primary btn-component" data-spy="affix" data-offset-top="600"><i class="ti-shift-left-alt"></i> Components</a> -->
+        <div class="container-fluid" style="background-color: whitesmoke;">
+            <div id="about" class="row about-section">
+                <div class="col-lg-4 about-card">
+                    <h3 class="font-weight-light">Who am I ?</h3>
+                    <span class="line mb-5"></span>
+                    <h5 class="mb-3">Tech-Savvy Problem Solver 🔧| 💻 Web Developer | 🔐 Cybersecurity Professional</h5>
+                    <p><b style="font-size: 20px;">Hey, I'm Ozaswei!</b> I’m a multi-skilled tech enthusiast based in
+                        Toronto with proven experience across cybersecurity, technical support, and full-stack web
+                        development. With hands-on roles securing web systems, developing complex applications, and
+                        supporting users through technical challenges, I bring a holistic understanding of digital
+                        operations.</p>
 
-    <!--Resume Section-->
-    <section class="section myresume" id="resume">
-        <div class="container">
-            <h2 class="mb-5" style="color: white;"><span class="text-danger">My</span> Resume</h2>
-            <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card" style="background-color: #2f3542; color: whitesmoke;">
-                        <div class="card-header">
-                            <div class="mt-2">
-                                <h4>Expertise</h4>
-                                <span class="line"></span>
-                            </div>
-                        </div>
-                        <div class="card-body" style="color: whitesmoke;">
-                            <h6 class="title text-danger">Jul 2023 - Present</h6>
-                            <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold; color: white;">Cashier
-                                Assistant</P>
-                            <p style="margin-bottom: 7px;color: white;">Costco, 100 Billy Bishop Way, Toronto, Canada
+                    <p>From designing ATS platforms and payroll systems to conducting penetration tests and managing
+                        helpdesk tickets, my skillset bridges the gap between innovation and security. I’m certified in
+                        CompTIA Security+ and the Google Cybersecurity Certificate, equipped with the tools and mindset
+                        to
+                        tackle real-world threats and business needs alike.</p>
+
+                    <p>Let’s collaborate if you're looking for someone who can develop robust systems, secure them, and
+                        support users with clarity. 🤝💡</p>
+
+                    <!-- <button class="btn btn-outline-danger"><i class="icon-down-circled2 "></i>Download My CV</button> -->
+                    <a class="btn btn-outline-danger" href="files/resume.pdf" download
+                        target="_blank"><i class="icon-down-circled2 "></i>Download My CV</a>
+                </div>
+                <div class="col-lg-4 about-card">
+                    <h3 class="font-weight-light">Personal Info</h3>
+                    <span class="line mb-5"></span>
+                    <ul class="mt40 info list-unstyled">
+                        <li><span>Birthdate</span> : 03/08/1995</li>
+                        <li><span>Email</span> : ozaswei@gmail.com</li>
+                        <li><span>Phone</span> : +1 (647) 894-9673</li>
+                    </ul>
+                    <div>
+                        <a class="social-link text-dark"
+                            href="https://www.linkedin.com/in/ozaswei-bahadur-tamrakar-11a60a168/" target="_blank">
+                            <i class="fab fa-linkedin text-primary" aria-hidden="true" style="font-size: 30px;"></i>
+                        </a>
+                        <a class="social-link text-dark ml-2" href="https://github.com/ozaswei" target="_blank">
+                            <i class="fab fa-github text-primary" aria-hidden="true" style="font-size: 30px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 about-card">
+                    <h3 class="font-weight-light">My Expertise</h3>
+                    <span class="line mb-5"></span>
+                    <div class="row">
+                        <div class="col-1 text-danger pt-1"><i class="ti-shield icon-lg"></i></div>
+                        <div class="col-10 ml-auto mr-3">
+                            <h6>Cybersecurity</h6>
+                            <p class="subtitle">Risk assessments, security audits, Metasploit testing, and Python
+                                automation
+                                for threat detection. Email & network security implementation reducing threats by 40%.
                             </p>
-                            <ul style="padding-left: 10px;">
-                                <li>Enhance customer experience by efficiently assisting cashiers, resulting in
-                                    increased transaction speed and reduced
-                                    wait times.</li>
-                                <li>Working diligently to ensure accuracy in transactions and maintaining customer
-                                    trust, which is vital for repeat sales.</li>
-                                <li>Drive sales by recommending complementary products and promoting Costco memberships
-                                    to customers.</li>
-                                <li>Contribute to loss prevention efforts by maintaining vigilance during checkout
-                                    processes and throughout the store.</li>
-                                <li>Demonstrate product knowledge to help customers make informed purchasing decisions,
-                                    potentially increasing
-                                    basket size.</li>
-                                <li>Collaborate with team members to maintain a clean, organized, and safe shopping
-                                    environment, improving overall
-                                    customer satisfaction.</li>
-                            </ul>
                             <hr>
-                            <h6 class="title text-danger">Jun 2023 - Sept 2023</h6>
-                            <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold;color: white;">Security
-                                Guard</P>
-                            <p style="margin-bottom: 7px;color: white;">Canadian National Exhibition (CNE), 1 Ontario
-                                Drive, Toronto,
-                                Canada</p>
-                            <ul style="padding-left: 10px;">
-                                <li>Patrolling the exhibition grounds to ensure guests, exhibitors, and staff safety and
-                                    security.</li>
-                                <li>Enforcing security regulations and responding to security incidents as needed.</li>
-                                <li>Collaborating with other security personnel and liaising with CNE management.</li>
-                                <li>Providing a visible and reassuring presence to maintain order and respond to
-                                    emergencies.</li>
-                            </ul>
-                            <hr>
-                            <h6 class="title text-danger">Nov 2019 - Jan 2023</h6>
-                            <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold;color: white;">Web Developer
-                            </P>
-                            <p style="margin-bottom: 7px;color: white;">Talent Connects, Lalitpur, Nepal</p>
-                            <ul style="padding-left: 10px;">
-                                <li>Created a Job portal website using Laravel Framework with Applicant Tracking System
-                                    features for Job posting, hiring,
-                                    and managing job seekers through the Jobseeker Pipelining System which 100+
-                                    companies use.</li>
-                                <li>Designed a Salary Survey and Leave Management System using JavaScript and jQuery
-                                    that calculates the average
-                                    salary of Jobs and their highest and lowest salary.</li>
-                                <li>Designed and developed a Payroll Calculation System using Laravel and JavaScript for
-                                    employees according to their
-                                    leave and attendance data which can be downloaded as a report in Excel or CSV
-                                    format.</li>
-                                <li>Administered daily security and performed routine checks of company databases.</li>
-                                <li>Developed and maintained security policies and procedures in compliance with
-                                    industry standards and regulations.</li>
-                                <li>Optimized email security solutions to cut down on the number of spam and phishing
-                                    emails.</li>
-                            </ul>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card" style="background-color: #40407a; color: whitesmoke;">
-                        <div class="card-header">
-                            <div class="mt-2">
-                                <h4>Education</h4>
-                                <span class="line"></span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="title text-danger">2023 - 2024</h6>
-                            <P style="font-weight: bold;color: whitesmoke;">Ontario College Graduate Certificate in
-                                Cyber Security</P>
-                            <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">Loyalist College</P>
-                            <p style="color: whitesmoke;">Toronto, Canada</p>
-                            <hr>
-                            <h6 class="title text-danger">2013 - 2017</h6>
-                            <P style="font-weight: bold;color: whitesmoke;">B.E in Computer Engineering</P>
-                            <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">Kathmandu Engineering
-                                College</P>
-                            <p style="color: whitesmoke;">Kathmandu, Nepal</p>
-                            <hr>
-                            <h6 class="title text-danger">2011 - 2013</h6>
-                            <P style="font-weight: bold;color: whitesmoke;">High School</P>
-                            <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">D.A.V. College</P>
-                            <p style="color: whitesmoke;">Lalitpur, Nepal</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card" style="background-color: #B53471;">
-                        <div class="card-header">
-                            <div class="pull-left">
-                                <h4 class="mt-2 text-light">Skills</h4>
-                                <span class="line"></span>
-                            </div>
-                        </div>
-                        <div class="card-body pb-2 text-light">
-                            <h6>Laravel</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>PHP</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>Python</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>JQuery</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
-                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
 
-                            <h6>JavaScript</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                        <div class="col-1 text-danger pt-1"><i class="ti-headphone-alt icon-lg"></i></div>
+                        <div class="col-10 ml-auto mr-3">
+                            <h6>Technical Support</h6>
+                            <p class="subtitle">End-user support, system setup, AD management, ticketing tools (JIRA,
+                                ServiceNow), and troubleshooting in Windows/Linux environments.</p>
+                            <hr>
+                        </div>
 
-                            <h6>SQL</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"
-                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>GitHub</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>Bootstrap</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>FileZilla</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 60%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>Html5 &amp; CSS</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 97%"
-                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                        <div class="col-1 text-danger pt-1"><i class="ti-widget icon-lg"></i></div>
+                        <div class="col-10 ml-auto mr-3">
+                            <h6>Web Development</h6>
+                            <p class="subtitle">Developed secure apps using Laravel, PHP, and JavaScript. Built ATS, HR,
+                                and
+                                Payroll systems used by 100+ organizations. Specialized in backend and full-stack dev.
+                            </p>
+                            <hr>
                         </div>
-                    </div>
-                    <!-- Language Card-->
-                    <div class="card" style="background-color: #1e3799;">
-                        <div class="card-header">
-                            <div class="pull-left">
-                                <h4 class="mt-2 text-light">Languages</h4>
-                                <span class="line"></span>
-                            </div>
-                        </div>
-                        <div class="card-body pb-2 text-light">
-                            <h6>English</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar"
-                                    style="width: 95%; background-color: royalblue;" aria-valuenow="25"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <h6>Nepali</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar"
-                                    style="width: 95%;background-color: royalblue;" aria-valuenow="25" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <h6>Newari</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar"
-                                    style="width: 90%;background-color: royalblue;" aria-valuenow="50" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                            <h6>Hindi</h6>
-                            <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar"
-                                    style="width: 90%;background-color: royalblue;" aria-valuenow="50" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end of Language Card-->
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Projects -->
-    <section class="section" id="Projects" style="background-color: whitesmoke;">
-        <div class="container">
-            <h1 class="mb-5"><span class="text-danger">My</span> Projects</h1>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card-header project1">
-                        Cyber6
-                    </div>
-                    <div class="card-body">
-                        Cyber6's Endpoint Security and Monitoring System, built on Xcitium's open-source platform,
-                        represents a
-                        cutting-edge solution in the rapidly evolving landscape of cybersecurity. Our system is
-                        meticulously
-                        designed to provide comprehensive protection against a wide spectrum of cyber threats, from
-                        common
-                        malware to sophisticated zero-day attacks. By leveraging advanced technologies and adhering to
-                        best
-                        practices in cybersecurity, we offer a robust, scalable, and user-friendly solution that
-                        addresses the complex
-                        challenges faced by modern organizations. At the core of our system is a multi-layered security
-                        approach
-                        that integrates several key features.
-                        <p class="mt-2"><a href="https://cyber6ix.github.io/" target="_blank">Learn More</a></p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-body">
-                        <img src="images/cyber6.jpg" alt="cyber6">
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Portfolio Section -->
-    <section class="section bg-custom-gray" id="portfolio">
-        <div class="container">
-            <h1 class="mb-5 text-light"><span class="text-danger">My</span> Portfolio</h1>
-            <div class="portfolio">
-                <!-- <div class="filters">
-                    <a href="#" data-filter=".new" class="active">
-                        New
-                    </a>
-                    <a href="#" data-filter=".advertising">
-                        Advertising
-                    </a>
-                    <a href="#" data-filter=".branding">
-                        Branding
-                    </a>
-                    <a href="#" data-filter=".web">
-                        Web
-                    </a>
-                </div> -->
-                <div class="portfolio-container">
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="images/1.jpg" class="img-fluid" alt="1">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/web-1.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>    -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="images/2.jpg" class="img-fluid" alt="2">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/web-2.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>  -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 advertising new">
-                        <div class="portfolio-item">
-                            <img src="images/3.jpg" class="img-fluid" alt="3">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/advertising-2.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">ADVERSTISING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>     -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 web">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/web-4.jpg" class="img-fluid" alt="4">
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/web-4.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 col-lg-4 advertising">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/advertising-1.jpg" class="img-fluid" alt="6">
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/advertising-1.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">ADVERSITING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+        <!--Resume Section-->
+        <section class="section myresume" id="resume">
+            <div class="container">
+                <h2 class="mb-5" style="color: white;"><span class="text-danger">My</span> Resume</h2>
+                <div class="row">
+                    <!-- Experience -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card" style="background-color: #2f3542; color: whitesmoke;">
+                            <div class="card-header">
+                                <div class="mt-2">
+                                    <h4>Experience</h4>
+                                    <span class="line"></span>
                                 </div>
+                            </div>
+                            <div class="card-body" style="color: whitesmoke;">
+                                <h6 class="title text-danger">Nov 2019 - Jan 2023</h6>
+                                <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold;color: white;">
+                                    Cybersecurity
+                                    & Web Developer</P>
+                                <p style="margin-bottom: 7px;color: white;">Talent Connects, Lalitpur, Nepal</p>
+                                <ul style="padding-left: 10px;">
+                                    <li>Designed and secured web applications, ensuring compliance with cybersecurity
+                                        best
+                                        practices.</li>
+                                    <li>Improved email security through anti-phishing and anti-spam measures, reducing
+                                        phishing incidents by 40%.</li>
+                                    <li>Conducted security audits, identifying vulnerabilities and implementing measures
+                                        that reduced system downtime by 15%.</li>
+                                    <li>Created a Job portal website using Laravel Framework with Applicant Tracking
+                                        System
+                                        features for Job posting, hiring,
+                                        and managing job seekers through the Jobseeker Pipelining System which 100+
+                                        companies use.</li>
+                                    <li>Designed a Salary Survey and Leave Management System using JavaScript and jQuery
+                                        that calculates the average
+                                        salary of Jobs and their highest and lowest salary.</li>
+                                    <li>Designed and developed a Payroll Calculation System using Laravel and JavaScript
+                                        for
+                                        employees according to their
+                                        leave and attendance data which can be downloaded as a report in Excel or CSV
+                                        format.</li>
+                                </ul>
+                                <hr>
+                                <h6 class="title text-danger">Jun 2023 - Sept 2023</h6>
+                                <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold;color: white;">Security
+                                    Operations & Incident Response (Physical-Cyber Hybrid)</P>
+                                <p style="margin-bottom: 7px;color: white;">Canadian National Exhibition Casino, 1
+                                    Ontario
+                                    Drive, Toronto,
+                                    Canada</p>
+                                <ul style="padding-left: 10px;">
+                                    <li>Patrolling the exhibition grounds to ensure guests, exhibitors, and staff safety
+                                        and
+                                        security.</li>
+                                    <li>Enforcing security regulations and responding to security incidents as needed.
+                                    </li>
+                                    <li>Collaborating with other security personnel and liaising with CNE management.
+                                    </li>
+                                    <li>Ensured the safety of guests and staff by enforcing security protocols and
+                                        conducting regular patrols, resulting in a 98% incident-free event.</li>
+                                </ul>
+                                <hr>
+                                <h6 class="title text-danger">Jul 2023 - Present</h6>
+                                <P style="padding-bottom: 0; margin-bottom:0; font-weight: bold; color: white;">Customer
+                                    Experience & Technical Operations Support (Retail IT exposure)</P>
+                                <p style="margin-bottom: 7px;color: white;">Costco, 100 Billy Bishop Way, Toronto,
+                                    Canada
+                                </p>
+                                <ul style="padding-left: 10px;">
+                                    <li>Enhanced customer satisfaction by streamlining cashier operations, leading to a
+                                        20%
+                                        reduction in checkout times.</li>
+                                    <li>Contribute to loss prevention efforts by maintaining vigilance during checkout
+                                        processes and throughout the store.</li>
+                                    <li>Participated in inventory bin tagging to maintain accurate stock records and
+                                        assist
+                                        in efficient restocking processes, enhancing inventory management.</li>
+                                    <li>Demonstrate product knowledge to help customers make informed purchasing
+                                        decisions,
+                                        potentially increasing basket size.</li>
+                                    <li>Promoted membership sales, contributing to a 15% increase in new sign-ups.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="images/5.jpg" class="img-fluid" alt="5">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/web-3.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">WEB</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                    <!-- Education -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card" style="background-color: #40407a; color: whitesmoke;">
+                            <div class="card-header">
+                                <div class="mt-2">
+                                    <h4>Education</h4>
+                                    <span class="line"></span>
                                 </div>
-                            </div> -->
+                            </div>
+                            <div class="card-body">
+                                <h6 class="title text-danger">2023 - 2024</h6>
+                                <P style="font-weight: bold;color: whitesmoke;">Ontario College Graduate Certificate in
+                                    Cyber Security</P>
+                                <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">Loyalist College</P>
+                                <p style="color: whitesmoke;">Toronto, Canada</p>
+                                <hr>
+                                <h6 class="title text-danger">2013 - 2017</h6>
+                                <P style="font-weight: bold;color: whitesmoke;">B.E in Computer Engineering</P>
+                                <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">Kathmandu Engineering
+                                    College</P>
+                                <p style="color: whitesmoke;">Kathmandu, Nepal</p>
+                                <hr>
+                                <h6 class="title text-danger">2011 - 2013</h6>
+                                <P style="font-weight: bold;color: whitesmoke;">High School</P>
+                                <P class="subtitle" style="margin-bottom: 0;color: whitesmoke;">D.A.V. College</P>
+                                <p style="color: whitesmoke;">Lalitpur, Nepal</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4 advertising new">
-                        <div class="portfolio-item">
-                            <img src="images/4.png" class="img-fluid" alt="4">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/advertising-3.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">ADVERSITING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                    <!-- Skills -->
+                    <div class="col-lg-4">
+                        <div class="card" style="background-color: #B53471;">
+                            <div class="card-header">
+                                <div class="pull-left">
+                                    <h4 class="mt-2 text-light">Skills</h4>
+                                    <span class="line"></span>
                                 </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 advertising new">
-                        <div class="portfolio-item">
-                            <img src="images/8.jpg" class="img-fluid" alt="8">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/advertising-4.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">ADVERTISING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div> -->
-                        </div>
+                            </div>
+                            <div class="card-body pb-2 text-light">
 
-                    </div>
-                    <div class="col-md-6 col-lg-4 branding new">
-                        <div class="portfolio-item">
-                            <img src="images/6.jpg" class="img-fluid" alt="6">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-1.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                <!-- CYBERSECURITY SKILLS -->
+                                <h5 class="text-warning mb-3">Cybersecurity</h5>
+
+                                <h6>Risk Assessment & Security Audits</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 90%"></div>
                                 </div>
-                            </div>  -->
+
+                                <h6>SIEM (Splunk, Elastic)</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                </div>
+
+                                <h6>Metasploit & Wireshark</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 80%"></div>
+                                </div>
+
+                                <h6>Email & Network Security</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 85%"></div>
+                                </div>
+
+                                <h6>Python Automation for Security</h6>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-danger" style="width: 80%"></div>
+                                </div>
+
+                                <!-- WEB DEVELOPMENT SKILLS -->
+                                <h5 class="text-warning mt-4 mb-3">Web Development</h5>
+
+                                <h6>Laravel</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 90%"></div>
+                                </div>
+
+                                <h6>PHP / Python / JavaScript</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 90%"></div>
+                                </div>
+
+                                <h6>HTML / CSS / Bootstrap</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 95%"></div>
+                                </div>
+
+                                <h6>jQuery / AJAX</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 85%"></div>
+                                </div>
+
+                                <h6>MySQL / PostgreSQL</h6>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-danger" style="width: 90%"></div>
+                                </div>
+
+                                <!-- TECHNICAL SUPPORT SKILLS -->
+                                <h5 class="text-warning mt-4 mb-3">Technical Support</h5>
+
+                                <h6>Windows / Linux Admin</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 90%"></div>
+                                </div>
+
+                                <h6>Active Directory & O365</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 80%"></div>
+                                </div>
+
+                                <h6>Ticketing Systems (JIRA, ServiceNow, Zendesk)</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 85%"></div>
+                                </div>
+
+                                <h6>VPN / Remote Desktop / Printer Support</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 80%"></div>
+                                </div>
+
+                                <h6>Customer-Facing Troubleshooting</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" style="width: 95%"></div>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-2.jpg" class="img-fluid"
-                                alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-2.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                        <!-- Language Card-->
+                        <div class="card" style="background-color: #1e3799;">
+                            <div class="card-header">
+                                <div class="pull-left">
+                                    <h4 class="mt-2 text-light">Languages</h4>
+                                    <span class="line"></span>
+                                </div>
+                            </div>
+                            <div class="card-body pb-2 text-light">
+                                <h6>English</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: 95%; background-color: royalblue;" aria-valuenow="25"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h6>Nepali</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: 95%;background-color: royalblue;" aria-valuenow="25"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h6>Newari</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: 90%;background-color: royalblue;" aria-valuenow="50"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h6>Hindi</h6>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: 90%;background-color: royalblue;" aria-valuenow="50"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 branding new">
-                        <div class="portfolio-item">
-                            <img src="images/7.jpg" class="img-fluid"
-                                alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
-                            <!-- <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-3.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-4.jpg" class="img-fluid"
-                                alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-4.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 branding">
-                        <div class="portfolio-item">
-                            <img src="assets/imgs/branding-5.jpg" class="img-fluid"
-                                alt="Download free bootstrap 4 admin dashboard, free boootstrap 4 templates">
-                            <div class="content-holder">
-                                <a class="img-popup" href="assets/imgs/branding-5.jpg"></a>
-                                <div class="text-holder">
-                                    <h6 class="title">BRANDING</h6>
-                                    <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- end of Language Card-->
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Certificates -->
+        <section class="section" style="background-color: #273c75;">
+            <div class="container">
+                <h1 class="mb-5 text-light text-center"><span class="text-danger">My</span> Certifications</h1>
+                <div class="text-center">
+                    <a href="https://www.credly.com/earner/earned/badge/5223bfe5-e043-4da1-a083-056f3f748bd5"
+                        target="_blank" class="mr-5">
+                        <img src="frontPage/images/comptia-security-ce-certification.png"
+                            alt="Comptia Security Plus Badge" width="20%">
+                    </a>
+                    <a href="https://www.credly.com/badges/226b15a3-aa1d-4d19-8707-e83f76f23915/linked_in_profile"
+                        target="_blank">
+                        <img src="frontPage/images/google.png"
+                            alt="Google Cybersecurity Professional Badge" width="30%">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="projects-section" id="Projects">
+            <div class="bubble-wrapper">
+                <canvas id="bubbleCanvas"></canvas>
+            </div>
+            <div class="container">
+                <h1 class="section-title">My <span>Projects</span></h1>
+                <div class="project-grid">
+                    <!-- Cards (unchanged, omitted for brevity) -->
+                    <div class="project-card">
+                        <h3>Job Portal with ATS Integration</h3>
+                        <p class="tech">Laravel, PHP, JavaScript, MySQL</p>
+                        <p class="desc">Developed a job portal used by 100+ companies with resume parsing and secure
+                            authentication.</p>
+                    </div>
+                    <!-- Add remaining cards here -->
+                    <div class="project-card">
+                        <h3>Payroll Management System</h3>
+                        <p class="tech">Laravel, JavaScript, MySQL</p>
+                        <p class="desc">Automated salary computation and report generation with validations and audit
+                            logging.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>HR Management System</h3>
+                        <p class="tech">Laravel, JavaScript, AJAX, MySQL</p>
+                        <p class="desc">Built for employee tracking with access controls, real-time updates, and
+                            onboarding tools.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Salary Survey System</h3>
+                        <p class="tech">Laravel, JavaScript, jQuery</p>
+                        <p class="desc">Search system showing salary ranges by job title and country using web scraping
+                            logic.</p>
+                        <a href="{{route('salarySurvey')}}" target="_blank"
+                            style="text-decoration: underline; color: lightgrey">View</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Single-Page Website Generator</h3>
+                        <p class="tech">HTML, Bootstrap, JavaScript</p>
+                        <p class="desc">Web template system for small businesses, SEO optimized and mobile-friendly.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Email Security Gateway</h3>
+                        <p class="tech">Linux, Email Protocols</p>
+                        <p class="desc">Reduced phishing by 40% using email filtering and secure email gateway
+                            configuration.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Cyber6 Endpoint Security</h3>
+                        <p class="tech">Xcitium Platform</p>
+                        <p class="desc">Built multi-layered endpoint defense system with scalable deployment for
+                            enterprises.</p>
+                        <a href="https://cyber6ix.github.io/" target="_blank"
+                            style="text-decoration: underline; color: lightgrey">View</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>IT Support Lab Simulations</h3>
+                        <p class="tech">Wireshark, RDP, VPN</p>
+                        <p class="desc">Created simulated support environments for hands-on troubleshooting and
+                            diagnostics.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Personal Portfolio Website</h3>
+                        <p class="tech">Laravel, Docker, AWS</p>
+                        <p class="desc">Deployed personal portfolio using Docker, SSL, Apache, Cloudflare, and CI/CD
+                            pipeline.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" style="padding: 40px 0; background-color: #f9f9f9;">
+            <div class="container">
+                <div class="masonry" style="column-count: 3; column-gap: 1rem;">
+                    <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/1.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/2.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/3.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/4.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/5.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/6.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/7.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/8.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/9.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/10.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/11.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/12.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/13.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+                <div
+                        style="break-inside: avoid; margin-bottom: 1rem; overflow: hidden; border-radius: 8px; transition: transform 0.3s ease-in-out;">
+                        <img src="images/14.jpg" class="img-fluid w-100" alt="Portfolio image 1"
+                            style="transition: transform 0.3s ease-in-out;">
+                </div>
+
+            </div>
+    </div>
     </section>
     <!-- End of portfolio section -->
 
-    <div class="section contact getintouch" id="contact"
-        style="background-image: url('images/image8.1.gif'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+    <!-- contact me -->
+    <div class="section contact getintouch pb-0" id="contact">
         <div class="container">
             <div class="card" style="background-color: transparent; box-shadow: none; border: none; opacity: 0.9;">
                 <div class="card-body">
                     <div class="get-in-touch-container">
                         <h2>Get in Touch</h2>
-                        <p>Connect with me to explore opportunities, share ideas, or discuss how we can collaborate!z
+                        <p>Connect with me to explore opportunities, share ideas, or discuss how we can collaborate!
                         </p>
                         <div class="contact-methods">
                             <div class="contact-item">
@@ -753,84 +821,29 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row">
-                <div class="col-lg-8">
-                    <div class="contact-form-card">
-                        <h4 class="contact-title">Send a message</h4>
-                        <form action="mailto:ozaswei@gmail.com">
-                            <div class="form-group">
-                                <input class="form-control" type="text" placeholder="Name *" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="email" placeholder="Email *" name="mail" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id=" placeholder=" Message *" rows="7" required
-                                    name="message"></textarea>
-                            </div>
-                            <div class="form-group ">
-                                <button type="submit" class="form-control btn btn-primary">Send Message</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <h4 class="contact-title">Get in touch</h4>
-                        <div class="row mb-2">
-                            <div class="col-1 pt-1 mr-1">
-                                <i class="ti-mobile icon-md"></i>
-                            </div>
-                            <div class="col-10 ">
-                                <h6 class="d-inline">Phone : <br> <span class="text-muted">+1(647)894-9673</span></h6>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-1 pt-1 mr-1">
-                                <i class="ti-map-alt icon-md"></i>
-                            </div>
-                            <div class="col-10">
-                                <h6 class="d-inline">Address :<br> <span class="text-muted">Toronto, Canada</span></h6>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-1 pt-1 mr-1">
-                                <i class="ti-envelope icon-md"></i>
-                            </div>
-                            <div class="col-10">
-                                <h6 class="d-inline">Email :<br> <span class="text-muted">ozaswei@gmail.com</span></h6>
-                            </div>
-                        </div>
-                        <ul class="social-icons pt-4">
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-facebook"
-                                        aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-twitter"
-                                        aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-google"
-                                        aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-instagram"
-                                        aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-github"
-                                        aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div> -->
-
+        </div>
+        <div class="animationDiv">
+            <img class="walkingMan" src="images/walking.gif">
+            <img class="walkingDog" src="images/walkingDog.gif">
+            <img class="walkingCat" src="images/walkingCat.gif">
         </div>
     </div>
-    <!-- <footer class="footer py-3">
-        <div class="container">
-            <p class="small mb-0 text-light">
-                &copy; <script>document.write(new Date().getFullYear())</script> Created With <i class="ti-heart text-danger"></i> By <a href="http://devcrud.com" target="_blank"><span class="text-danger" title="Bootstrap 4 Themes and Dashboards">DevCRUD</span></a> 
-            </p>
-        </div>
-    </footer> -->
+    <!-- End of contact me  -->
+    <!-- For Google Map -->
+    <!-- <div id="map" style="height: 400px; width: 100%;"></div> -->
+    </div>
+    <!--<footer class="footer py-3">
+        </footer> -->
 
     <!-- core  -->
     <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
     <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- project section -->
+    <script src="assets/js/projectSection.js"></script>
+
+    <!-- portfolio section -->
+    <script src="assets/js/portfolioSection.js"></script>
 
     <!-- bootstrap cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -842,8 +855,8 @@
     <script src="assets/vendors/isotope/isotope.pkgd.js"></script>
 
     <!-- Google mpas -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
+    <!-- <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script> -->
 
     <!-- JohnDoe js -->
     <script src="assets/js/johndoe.js"></script>
@@ -851,6 +864,8 @@
     <!-- Font awesome -->
     <script src="https://kit.fontawesome.com/3b3fcf971b.js" crossorigin="anonymous"></script>
 
+    <!-- Credly -->
+    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 </body>
 
 </html>
