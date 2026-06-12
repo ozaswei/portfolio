@@ -1,0 +1,36 @@
+#resume .container {
+    max-width: 1180px;
+}
+
+#resume .card {
+    width: 100%;
+    min-height: auto;
+}
+
+#resume .card-body {
+    padding: 22px;
+}
+
+.experience-list {
+    padding-left: 18px;
+    margin-bottom: 22px;
+}
+
+.experience-list li {
+    margin-bottom: 9px;
+    line-height: 1.55;
+    font-size: 14px;
+}
+
+.job-title {
+    margin-bottom: 2px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.company-info {
+    margin-bottom: 14px;
+    color: #dcdde1;
+    font-size: 13px;
+    line-height: 1.4;
+}
